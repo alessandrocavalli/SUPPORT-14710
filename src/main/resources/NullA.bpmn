@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:modeler="http://camunda.org/schema/modeler/1.0" id="Definitions_1r9nciz" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.12.0" modeler:executionPlatform="Camunda Platform" modeler:executionPlatformVersion="7.15.0">
+  <bpmn:process id="NullA" name="NullA" isExecutable="true" camunda:isStartableInTasklist="false">
+    <bpmn:startEvent id="StartEvent_1" name="Start">
+      <bpmn:outgoing>Flow_1flmjws</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="Flow_1flmjws" sourceRef="StartEvent_1" targetRef="Activity_0qu0mci" />
+    <bpmn:endEvent id="Event_1ttgl6r" name="End">
+      <bpmn:incoming>Flow_1dkjs7x</bpmn:incoming>
+    </bpmn:endEvent>
+    <bpmn:task id="Activity_0qu0mci" name="Calling another process (and deleting B)">
+      <bpmn:extensionElements>
+        <camunda:executionListener event="end">
+          <camunda:script scriptFormat="javascript">var out = java.lang.System.out;
+var jsonVar = execution.getVariable("jsonvar");
+var intVar = execution.getVariable("IntVar");
+var boolVar = execution.getVariable("BoolVar");
+var stringVar = execution.getVariable("StringVar");
+var stringVarTC = execution.getVariable("StringVarToChange");
+var objectVar = execution.getVariable("ObjectVar");
+var dateVar = execution.getVariable("DateVar");
+
+
+
+out.println("IntVar =&gt; "+ intVar);
+out.println("BoolVar =&gt; "+ boolVar);
+out.println("StringVar =&gt; "+ stringVar);
+out.println("StringVarTC =&gt; "+ stringVarTC);
+out.println("DateVar =&gt; "+ dateVar);
+out.println("ObjectVar =&gt; "+ objectVar);
+
+
+out.println("Resetting extra variables....");
+out.println("I'm deleting B as well!");
+jsonVar.deleteProp("B");
+
+execution.setVariable("jsonvar", jsonVar);
+
+intVar = 0;
+boolVar = false;
+stringVar = "GoodBye!";
+stringVarTC = "GoodBye!";
+dateVar = null;
+objectVar = null;
+
+execution.setVariable("IntVar", intVar);
+execution.setVariable("BoolVar", boolVar);
+execution.setVariable("StringVar", stringVar);
+execution.setVariable("StringVarToChange", stringVarTC);
+execution.setVariable("DateVar", dateVar);
+execution.setVariable("ObjectVar", objectVar);
+
+
+out.println("\n\nOk now let's recheck the variables INSIDE the subprocess (taking them from execution, AGAIN)!");
+
+intVar = execution.getVariable("IntVar");
+boolVar = execution.getVariable("BoolVar");
+stringVar = execution.getVariable("StringVar");
+jsonVar = execution.getVariable("jsonvar");
+stringVarTC = execution.getVariable("StringVarToChange");
+objectVar = execution.getVariable("ObjectVar");
+dateVar = execution.getVariable("DateVar");
+
+out.println("jsovar =&gt; "+ jsonVar);
+out.println("IntVar =&gt; "+ intVar);
+out.println("BoolVar =&gt; "+ boolVar);
+out.println("StringVar =&gt; "+ stringVar);
+out.println("StringVarToChange =&gt; "+ stringVarTC);
+out.println("DateVar =&gt; "+ dateVar);
+out.println("ObjectVar =&gt; "+ objectVar);
+
+out.println("\nNow exiting the subprocess!");</camunda:script>
+        </camunda:executionListener>
+      </bpmn:extensionElements>
+      <bpmn:incoming>Flow_1flmjws</bpmn:incoming>
+      <bpmn:outgoing>Flow_1dkjs7x</bpmn:outgoing>
+    </bpmn:task>
+    <bpmn:sequenceFlow id="Flow_1dkjs7x" sourceRef="Activity_0qu0mci" targetRef="Event_1ttgl6r" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="NullA">
+      <bpmndi:BPMNEdge id="Flow_1flmjws_di" bpmnElement="Flow_1flmjws">
+        <di:waypoint x="215" y="80" />
+        <di:waypoint x="359" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="Flow_1dkjs7x_di" bpmnElement="Flow_1dkjs7x">
+        <di:waypoint x="459" y="80" />
+        <di:waypoint x="592" y="80" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="62" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="185" y="105" width="25" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Activity_0po8sex_di" bpmnElement="Activity_0qu0mci">
+        <dc:Bounds x="359" y="40" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="Event_1ttgl6r_di" bpmnElement="Event_1ttgl6r">
+        <dc:Bounds x="592" y="62" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="600" y="105" width="20" height="14" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>
