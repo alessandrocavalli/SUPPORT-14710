@@ -37,7 +37,7 @@ public class SetVariableDelegate implements JavaDelegate {
       execution.setVariable("StringVar", "Hello!");
       execution.setVariable("DateVar", new Date());
       
-      execution.setVariable("ObjectVar", new WhatIsThisObject());
+     // execution.setVariable("ObjectVar", new WhatIsThisObject());
      
       
       execution.setVariable("StringVarToChange", "Hello!");
