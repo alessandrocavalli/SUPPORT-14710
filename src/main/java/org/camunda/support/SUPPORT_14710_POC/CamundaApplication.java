@@ -25,7 +25,7 @@ public class CamundaApplication {
 	@EventListener
 	private void processPostDeploy(PostDeployEvent event) {
 		
-	 // runtimeService.startProcessInstanceByKey(ProcessConstants.PROCESS_DEFINITION_KEY);
+	  runtimeService.startProcessInstanceByKey(ProcessConstants.PROCESS_DEFINITION_KEY);
 	  runtimeService.startProcessInstanceByKey(ProcessConstants.PROCESS_DEFINITION_KEY+"-2");
 	
 	}
